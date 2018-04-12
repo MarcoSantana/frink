@@ -17,5 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/openpay', 'OpenpayController@index')->name('optest');
+//Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/openpay', 'OpenpayController@index')->name('optest');
+Route::resource('pagos', 'OpenpayController');

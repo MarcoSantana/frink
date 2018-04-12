@@ -300,8 +300,9 @@ a.button.disabled {
 <body>
     <div class="bkng-tb-cntnt">
         <div class="pymnts">
-            <form action="#" method="POST" id="payment-form">
+            <form action="{{ action('OpenpayController@store') }}" method="POST" id="payment-form">
                 <input type="hidden" name="token_id" id="token_id">
+                {{ csrf_field()  }}
                 <div class="pymnt-itm card active">
                     <h2>Tarjeta de crédito o débito</h2>
                     <div class="pymnt-cntnt">
