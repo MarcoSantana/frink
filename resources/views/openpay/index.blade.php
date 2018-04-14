@@ -10,34 +10,34 @@
   src="https://openpay.s3.amazonaws.com/openpay-data.v1.min.js"></script>
 
 <script type="text/javascript">
-        $(document).ready(function() {
+$(document).ready(function() {
 
-            OpenPay.setId('mzdtln0bmtms6o3kck8f');
-            OpenPay.setApiKey('pk_f0660ad5a39f4912872e24a7a660370c');
-            OpenPay.setSandboxMode(true);
-            //Se genera el id de dispositivo
-            var deviceSessionId = OpenPay.deviceData.setup("payment-form", "deviceIdHiddenFieldName");
-            
-            $('#pay-button').on('click', function(event) {
+        OpenPay.setId('mzdtln0bmtms6o3kck8f');
+        OpenPay.setApiKey('pk_f0660ad5a39f4912872e24a7a660370c');
+        OpenPay.setSandboxMode(true);
+        //Se genera el id de dispositivo
+        var deviceSessionId = OpenPay.deviceData.setup("payment-form", "deviceIdHiddenFieldName");
+
+        $('#pay-button').on('click', function(event) {
                 event.preventDefault();
                 $("#pay-button").prop( "disabled", true);
                 OpenPay.token.extractFormAndCreate('payment-form', sucess_callbak, error_callbak);                
-            });
+        });
 
-            var sucess_callbak = function(response) {
-              var token_id = response.data.id;
-              $('#token_id').val(token_id);
-              $('#payment-form').submit();
-            };
+        var sucess_callbak = function(response) {
+                var token_id = response.data.id;
+                $('#token_id').val(token_id);
+                $('#payment-form').submit();
+        };
 
-            var error_callbak = function(response) {
+        var error_callbak = function(response) {
                 var desc = response.data.description != undefined ? response.data.description : response.message;
                 alert("ERROR [" + response.status + "] " + desc);
                 $("#pay-button").prop("disabled", false);
-            };
+        };
 
-        });
-    </script>
+});
+</script>
 
 <style>
 @charset "US-ASCII";
@@ -68,7 +68,7 @@ body {
     width: 100%;
 }
 strong {
-	font-weight: 700;
+    font-weight: 700;
 }
 a {
     cursor: pointer;
@@ -329,6 +329,15 @@ a.button.disabled {
                             </div>
                             <div class="openpay"><div class="logo">Transacciones realizadas vía:</div>
                             <div class="shield">Tus pagos se realizan de forma segura con encriptación de 256 bits</div>
+                        </div>
+                        <div class="sctn-row">
+                               <div class="sctn-col 1">
+                                        <label for="amount">Cantidad</label>
+                <!--                        <input type="text" autocomplete="on" name="amount"> -->
+                                        <input name="amount" type="hidden" value="100.0">
+                                        <input type="hidden" name="currency" value="MXN">
+                                        <h3>Amount 100.0</h3>
+                                </div>
                         </div>
                         <div class="sctn-row">
                                 <a class="button rght" id="pay-button">Pagar</a>

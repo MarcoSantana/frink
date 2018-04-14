@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use OpenPay;
+use Openpay;
+use Faker\Factory as Faker;
 
 class OpenpayController extends Controller
 {
@@ -15,7 +16,14 @@ class OpenpayController extends Controller
         public function __construct()
         {
                 //$this->users = $users;
-                $openpay = new OpenPay;
+                //$openpay = new OpenPay;
+                $faker = Faker::create('es_ES');
+                $customer = ['name' => $faker->firstName,
+                        'last_name' => $faker->lastName,
+                        'phone_number' => $faker->phoneNumber,
+                        'email' => $faker->email
+                ];
+
 
         }
         /**
@@ -48,42 +56,24 @@ class OpenpayController extends Controller
          */
         public function store(Request $request)
         {
-                //Here we recibe the data from the openpay form with all their magic
-                //already done
-            /* $openpay = Openpay::getInstance('mzdtln0bmtms6o3kck8f', 
-              'sk_e568c42a6c384b7ab02cd47d2e407cab');
-
-            $customer = array(
-                         'name' => $_POST["name"],
-                              'last_name' => $_POST["last_name"],
-                                   'phone_number' => $_POST["phone_number"],
-                                        'email' => $_POST["email"],
-                                );
-
-            $chargeData = array(
+                $openpay = Openpay::getInstance('mybzouyehednkz8qtbof', 'sk_e1856834504d46e79c122564cdf2a1b4');
+                $faker = Faker::create('es_ES');
+                $customer = ['name' => $faker->firstName,
+                        'last_name' => $faker->lastName,
+                        'phone_number' => $faker->phoneNumber,
+                        'email' => $faker->email
+                ];
+                $chargeData = [
                         'method' => 'card',
-                            'source_id' => $_POST["token_id"],
-                                'amount' => (float)$_POST["amount"],
-                                    'description' => $_POST["description"],
-                                        'use_card_points' => $_POST["use_card_points"], // Opcional, si estamos usando puntos
-                                            'device_session_id' => $_POST["deviceIdHiddenFieldName"],
-                                                'customer' => $_POST[$customer]
-
-                                        );
-
-            $charge = $openpay->charges->create($chargeData);
-             */
-                //return $request;
-                //TODO add to the openpay form the amount
-                //TODO where do I get the customer??
-
-                $chargeData = $chargeData = ['method' => 'card',
                         'source_id' => $request->token_id,
                         'device_session_id' => $request->deviceIdHiddenFieldName,
+                        'amount' => 100,
+                        'currency' => 'MXN',
+                        'customer' => $customer
                 ];
-
                 //Make the charge
                 $charge = $openpay->charges->create($chargeData);
+                return $charge;
         }
 
         /**
