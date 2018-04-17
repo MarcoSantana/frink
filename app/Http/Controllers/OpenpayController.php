@@ -56,7 +56,7 @@ class OpenpayController extends Controller
          */
         public function store(Request $request)
         {
-                $openpay = Openpay::getInstance('mybzouyehednkz8qtbof', 'sk_e1856834504d46e79c122564cdf2a1b4');
+                /*$openpay = Openpay::getInstance('mybzouyehednkz8qtbof', 'sk_e1856834504d46e79c122564cdf2a1b4');
                 $faker = Faker::create('es_ES');
                 $customer = ['name' => $faker->firstName,
                         'last_name' => $faker->lastName,
@@ -73,6 +73,27 @@ class OpenpayController extends Controller
                 ];
                 //Make the charge
                 $charge = $openpay->charges->create($chargeData);
+                 */
+                $openpay = Openpay::getInstance('mzdtln0bmtms6o3kck8f', 'sk_e568c42a6c384b7ab02cd47d2e407cab');
+                $customer = array(
+                        'name' => 'Juan',
+                        'last_name' => 'Vazquez Juarez',
+                        'phone_number' => '4423456723',
+                        'email' => 'juan.vazquez@empresa.com.mx'
+                );
+
+                $chargeRequest = array(
+                        'method' => 'card',
+                        'source_id' => 'kqgykn96i7bcs1wwhvgw',
+                        'amount' => 100,
+                        'currency' => 'MXN',
+                        'description' => 'Cargo inicial a mi merchant',
+                        'order_id' => 'oid-00051',
+                        'device_session_id' => 'kR1MiQhz2otdIuUlQkbEyitIqVMiI16f',
+                        'customer' => $customer
+                );
+
+                $charge = $openpay->charges->create($chargeRequest);
                 return $charge;
         }
 
